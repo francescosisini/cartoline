@@ -1,0 +1,321 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+
+#define BKG_W 55
+#define BKG_H 5
+
+char * add(char *str,char reset);
+double bkg_velocity(int bkg_n,int x_old, int x,double d[]);
+char * color(char *str);
+void print_centered(int rc,int cc, char *str);
+char * scroll(char *str[], double v, double t,int x_0);
+
+
+
+
+char * b0[BKG_H]={"                                                                                                  ",
+                  "                                                                                                  ",
+                  "              v                                       v                                           ",
+                  "             vvv        vvv         v        vvvv    vvv      v                vvv                ",
+                  "            vvvvv      vvvvv       vvv      vvvvvv  vvvvv    vvv    vvv       vvvvv       vvv     "};
+
+
+char  *b1[BKG_H]={" ###        #           #               #      ###      #                  #                #     ",
+                  "#####      ###         ###             ###    #####    ###                ###              ###    ",
+                  "#####     #####       #####           #####   #####   #####              #####            #####   ",
+                  "  @         @           @               @       @       @                  @                @     ",
+                  "  @         @           @               @       @       @                  @                @     "};
+
+char  *b2[BKG_H]={"    ...                  ...        ....                   ...                      ........      ",
+                  "           ......                           ....                         ......                   ",
+                  "                                                                                                  ",
+                  "                                                                                                  ",
+                  "                                                                                                  "};
+
+int main()
+{
+
+  system("clear");
+  
+/* apertura anngolare della camera */
+  double alp=60.0;
+  
+  /* posizione del T sul bg0    */
+  int x0=strlen(b0[0])/2.;
+  
+  /* velocità T in passi/iterazione rispetto al piano 0 */
+  double vb[BKG_W];
+  vb[0]=1;
+  
+  /* segmento visibile del piano  */
+  double lb[BKG_W];
+  
+  /* distanza del piano (background) dalla camera */
+  double db[BKG_W]={5,20,35};
+
+  /* Calcolo il segmento visibile per ogni piano */
+  for(int i=0;i<BKG_W;i++)
+    {
+      lb[i]=2*db[i]*sin(alp/2);
+    }
+
+  /* Presentazione */
+  char *str1="Una tabella ascii e un compilatore C";
+  char *str2="...basta poco per stupirci ancora";
+  char *str3="https://www.isisinipazzi.it/";
+  char buff[200];
+  for(int i=1;i<=strlen(str1);i++)
+    {
+      strncpy(buff,str1,i);
+      buff[i]=0;
+      print_centered(24,80,buff);
+      getchar();
+    }
+
+  for(int i=1;i<=strlen(str2);i++)
+    {
+      strncpy(buff,str2,i);
+      buff[i]=0;
+      print_centered(26,80,buff);
+      getchar();
+    }
+
+  for(int i=1;i<=strlen(str3);i++)
+    {
+      strncpy(buff,str3,i);
+      buff[i]=0;
+      print_centered(28,80,buff);
+      getchar();
+    }
+
+
+  
+  /* Cornici */
+  for(int i=14;i<15+BKG_W+1;i++)
+    {
+      printf("\x1b[5;%dH%s\n",i,"X");
+      getchar();
+    }
+  for(int i=5;i<5+BKG_H*3+2;i++)
+    {
+      printf("\x1b[%d;%dH%s\n",i,15+BKG_W+1,"X");
+      getchar();
+    }
+  for(int i=15+BKG_W+1;i>=14;i--)
+    {
+      printf("\x1b[%d;%dH%s\n",5+BKG_H*3+2,i,"X");
+      getchar();
+    }
+  for(int i=5+BKG_H*3+2;i>5;i--)
+    {
+      printf("\x1b[%d;%dH%s\n",i,15-1,"X");
+      getchar();
+    }
+
+  
+  
+  /* Cornici */
+  for(int i=90-1;i<90+BKG_W+1;i++)
+    {
+      printf("\x1b[5;%dH%s\n",i,"X");
+      getchar();
+    }
+  for(int i=5;i<5+BKG_H*3+2;i++)
+    {
+      printf("\x1b[%d;%dH%s\n",i,90+BKG_W+1,"X");
+      getchar();
+    }
+  for(int i=90+BKG_W+1;i>=90-1;i--)
+    {
+      printf("\x1b[%d;%dH%s\n",5+BKG_H*3+2,i,"X");
+      getchar();
+    }
+  for(int i=5+BKG_H*3+2;i>5;i--)
+    {
+      printf("\x1b[%d;%dH%s\n",i,90-1,"X");
+      getchar();
+    }
+
+
+
+
+  
+  /* Animazione */  
+  for(int i=1;i<1000;i++)
+    {
+      
+      char *mp;
+     
+      double v=bkg_velocity(2,i-1,i,db);
+      char *p=scroll(b2,v,i,1);
+      mp=add(p,1);
+      printf("\x1b[6;1H%s\n","Sfondo:");
+      printf("\x1b[6;15H%s\n",p);
+      printf("\x1b[7;15H%s\n",p+BKG_W);
+      printf("\x1b[8;15H%s\n",p+2*BKG_W);
+      printf("\x1b[9;15H%s\n",p+3*BKG_W);
+      printf("\x1b[10;15H%s\n",p+4*BKG_W);
+      
+      v=bkg_velocity(1,i-1,i,db);
+      p=scroll(b1,v,i,1);
+      add(p,0);
+      printf("\x1b[11;1H%s\n","II piano:");
+      printf("\x1b[11;15H%s\n",p);
+      printf("\x1b[12;15H%s\n",p+BKG_W);
+      printf("\x1b[13;15H%s\n",p+2*BKG_W);
+      printf("\x1b[14;15H%s\n",p+3*BKG_W);
+      printf("\x1b[15;15H%s\n",p+4*BKG_W);
+
+      v=bkg_velocity(0,i-1,i,db);
+      p=scroll(b0,v,i,1);
+      mp=add(p,0);
+      printf("\x1b[16;1H%s\n","I piano:");
+      printf("\x1b[16;15H%s\n",p);
+      printf("\x1b[17;15H%s\n",p+BKG_W);
+      printf("\x1b[18;15H%s\n",p+2*BKG_W);
+      printf("\x1b[19;15H%s\n",p+3*BKG_W);
+      printf("\x1b[20;15H%s\n",p+4*BKG_W);
+      
+      
+      /*stampa il merge*/
+      
+      printf("\x1b[11;90H%s\n",color(mp));
+      printf("\x1b[12;90H%s\n",color(mp+BKG_W));
+      printf("\x1b[13;90H%s\n",color(mp+2*BKG_W));
+      printf("\x1b[14;90H%s\n",color(mp+3*BKG_W));
+      printf("\x1b[15;90H%s\n",color(mp+4*BKG_W));
+      
+      getchar();
+    }
+      
+
+  
+}
+
+/* calcola la velocità di scorrimento del piano numero: bkg_n  */
+double bkg_velocity(int bkg_n,int x_old, int x,double d[])
+{
+  return (x-x_old)*d[0]/d[bkg_n]; 
+}
+
+/* sovrappone in trasparenza un piano immagine all'immagine di background.
+   L'immagine ottenuta è il nuovo background.
+   Il char 32 (spazio) è il carattere di trasparenza.
+   Se reset==1 imposta tutta l'immagine a char 32 (spazio)  */
+char * add(char *img,char reset)
+{
+  static char mal=0;
+  static char * buffer=0;
+  if(!mal)
+    {
+      buffer=malloc(BKG_H*BKG_W*sizeof(char));
+      mal=1;
+    }
+  if(reset) memset(buffer,32,BKG_H*BKG_W*sizeof(char));
+  for(int i=0;i<BKG_H*BKG_W;i++)
+    {
+      if(*(img+i)!=32)*(buffer+i)=*(img+i);
+    }
+  return buffer;
+}
+
+
+/* Accetta una stringa aggiunge gli escape per colorarli
+   secondo una codifica ASCII->colore stabilita in questa 
+   stessa funzione
+*/
+char * color(char * str){
+static char mal=0;
+  static char * buffer=0;
+  int buffer_p=0;
+  if(!mal)
+    {
+      buffer=malloc(BKG_H*BKG_W*sizeof(char)*3);
+      mal=1;
+    }
+  static char ansi_code[40];
+  /* Hash table colori con codifca a 8-bit ESC[48;5;#m */
+  /*
+    
+    da 0 a 7 colori ANSI normali
+    da 8 a 15 colori ANSI brillanti
+    da 16 a 231 scala RGB: B+G*6+R*36
+    da 232 a 255 scala di grigi da bianco a nero
+
+    hash table (modificabile a piacere):
+    #-> verde / 34
+    @-> marrone / 94 
+    O-> rosso / 9
+   */
+  int c=255;
+  
+  for(int i=0;i<strlen(str);i++){
+    
+    if(*(str+i)=='#') c=34;
+    if(*(str+i)=='@') c=94;
+    if(*(str+i)=='O') c=9;
+    if(*(str+i)=='.') c=21;
+    if(*(str+i)=='v') c=10;
+    if(*(str+i)!=32)
+      {
+        sprintf(ansi_code,"\x1b[38;5;%dm%c\x1b[38;5;0m",c,*(str+i));
+        strcpy(buffer+buffer_p,ansi_code);
+        buffer_p=buffer_p+strlen(ansi_code)-1;
+      }
+    else
+      *(buffer+buffer_p)=32;
+      
+    buffer_p++;
+  }
+  *(buffer+buffer_p)=0;
+  return buffer;
+}
+
+
+
+/* scorre l'immagine str in base alla posizione e alla velocità  */
+char * scroll(char *str[], double v, double t,int x_0)
+{
+  static char mal=0;
+  static char * buffer=0;
+  if(!mal)
+    {
+      buffer=malloc(BKG_H*BKG_W*sizeof(char));
+      mal=1;
+    }
+
+    
+  int l=strlen(str[0]);
+  int n=x_0+v*t;
+  
+  
+  if((n%l)+BKG_W<l)
+    {
+      for(int i=0;i<BKG_H;i++)
+        {
+          memcpy(buffer+i*BKG_W,str[i]+(n%l),BKG_W);
+          *(buffer+(i+1)*BKG_W-1)=0;
+        }
+    }
+  else
+    {
+      int w=l-n%l;
+      for(int i=0;i<BKG_H;i++){
+        memcpy(buffer+i*BKG_W,str[i]+(n%l),w);
+        memcpy(buffer+i*BKG_W+w,str[i],BKG_W-w);
+        *(buffer+(i+1)*BKG_W-1)=0;
+      }
+    }
+  
+  return buffer;
+  
+}
+
+void print_centered(int rc,int cc, char *str){
+
+  int l=cc-strlen(str)/2;
+  printf("\x1b[%d;%dH%s\n",rc,l,str);
+}
