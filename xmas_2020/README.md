@@ -14,6 +14,7 @@ _____________________________________________________________
 **Offerto da**: [Sfidare gli algoritmi: 5 videogiochi in C su Linux](https://www.amazon.it/dp/1695109325)
 
 ISTRUZIONI PER LA PERSONALIZZAZIONE:
+
 Dal file [auguri_natale_2020.c](auguri_natale_2020.c) puoi modificare:
 
 - il testo degli auguri
