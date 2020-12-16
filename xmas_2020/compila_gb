@@ -1,0 +1,1 @@
+gcc -o gb gingle_bell.c -lm -lopenal
