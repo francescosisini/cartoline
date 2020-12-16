@@ -1,14 +1,5 @@
 # Cartolina di Buon Natale
 ### Cartolina Musicale con Animazioni ASCII personalizzabile
-## Auguri originali
-
-Puoi personalizzare il messaggio di auguri, l'animazione e la musica e invia l'eseguile o il codice a chi vuoi
-
-Segui le istruzioni per il [2020](xmas_2020)
-
-Offerto da: [Sfidare gli algoritmi: 5 videogiochi in C su Linux](https://www.amazon.it/dp/1695109325)
-
-![screen](BuonNatale2020.png)
 
 _____________________________________________________________
 
@@ -23,7 +14,12 @@ francescomichelesisini@gmail.com
 _____________________________________________________________
 
 
+Puoi personalizzare il messaggio di auguri, l'animazione e la musica e invia l'eseguile o il codice a chi vuoi
+
 **Offerto da**: [Sfidare gli algoritmi: 5 videogiochi in C su Linux](https://www.amazon.it/dp/1695109325)
+
+![screen](BuonNatale2020.png)
+
 
 ISTRUZIONI PER LA PERSONALIZZAZIONE:
 
@@ -38,7 +34,9 @@ mentre dal file [gingle_bell.c ](gingle_bell.c ) puoi modificare:
 
 ISTRUZIONI PER LA COMPILAZIONE:
 
-dalla directory `xmas_2020` lancia:
+Scarica [il sorgente](https://github.com/francescosisini/cartoline.git)
+
+poi lancia:
 - `.\compila_gb`
 - `.\compila_card`
 
