@@ -65,7 +65,7 @@ int main() {
   // setup buffer and source
   
   alGenBuffers(1, & i_buf);
-  for(int i = 0;i<5; i++)
+  for(int i = 0;i<2; i++)
     suona();
 
 
