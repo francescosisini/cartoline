@@ -34,6 +34,10 @@ ISTRUZIONI PER L'ESECUZIONE:
 
 dalla directory `xmas_2020` lancia:
       
-        - Lancia gli auguri: ./auguri_2020
+- `./auguri_2020`
+
+ISTRUZIONE PER LA TERMINAZIONE
+
+L'animazione e la musica sono su due therad separati, per interrompere anzi tempo l'esecuzione, premere due volte CTRL C
 
 Se non senti la musica, puoi installare la libreria openal
