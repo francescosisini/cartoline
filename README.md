@@ -46,8 +46,8 @@ Vai nella directory del progetto:
 - `cd cartoline`
 
 Compila i sorgenti:
-- `.\compila_gb`
-- `.\compila_card`
+- `./compila_gb`
+- `./compila_card`
 
 
 ISTRUZIONI PER L'ESECUZIONE:
