@@ -4,7 +4,7 @@ _____________________________________________________________
 
 Una cartolina di Natale personalizzabile per gli utenti Linux
 
-@2019 Scuola_Sisini
+@2020 Scuola_Sisini
 https://pumar.it
 francescomichelesisini@gmail.com
 _____________________________________________________________
@@ -17,7 +17,7 @@ A TUA VOLTA, VAI SUL SITO https://pumar.it E SCARICA IL KIT
 
 ISTRUZIONI:
         - Apri un terminale e vai alla directry auguri 
-        - Lancia gli auguri: ./auguri_2019
+        - Lancia gli auguri: ./auguri_2020
 
 Se non senti la musica, puoi installare la libreria openal
 
