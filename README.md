@@ -34,7 +34,9 @@ mentre dal file [gingle_bell.c ](gingle_bell.c ) puoi modificare:
 
 ISTRUZIONI PER LA COMPILAZIONE:
 
-Scarica [il sorgente](https://github.com/francescosisini/cartoline.git)
+Scarica [il sorgente](https://github.com/francescosisini/cartoline.git) con
+
+- `git clone https://github.com/francescosisini/cartoline.git`
 
 poi lancia:
 - `.\compila_gb`
