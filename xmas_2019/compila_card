@@ -1,1 +1,0 @@
-gcc -o auguri_2019 auguri_natale_2019.c -lm -lpthread
