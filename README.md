@@ -34,18 +34,25 @@ mentre dal file [gingle_bell.c ](gingle_bell.c ) puoi modificare:
 
 ISTRUZIONI PER LA COMPILAZIONE:
 
+apri un terminale (almeno 80 colonne e 40 righe)
+- CTRL ALT T
+
 Scarica [il sorgente](https://github.com/francescosisini/cartoline.git) con
 
 - `git clone https://github.com/francescosisini/cartoline.git`
 
-poi lancia:
+Vai nella directory del progetto:
+
+- `cd cartoline`
+
+Compila i sorgenti:
 - `.\compila_gb`
 - `.\compila_card`
 
 
 ISTRUZIONI PER L'ESECUZIONE:
 
-dalla directory `xmas_2020` lancia:
+lancia:
       
 - `./auguri_2020`
 
